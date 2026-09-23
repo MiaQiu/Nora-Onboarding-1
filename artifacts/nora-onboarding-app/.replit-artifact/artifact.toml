@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Nora Onboarding"
+description = "A mobile-first onboarding experience for Nora Parenting that helps parents share context about their child, understand a current challenge, and begin with Nora's five calm minutes practice."
+version = "1.0.0"
+id = "artifacts/nora-onboarding-app"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24244
+
+[services.development]
+run = "pnpm --filter @workspace/nora-onboarding-app run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/nora-onboarding-app", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/nora-onboarding-app/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24244"
+BASE_PATH = "/"
