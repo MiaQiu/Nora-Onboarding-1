@@ -202,6 +202,14 @@ function AppContent() {
 
   const choose = (key: string, value: string) => {
     setAnswers((previous) => ({ ...previous, [key]: value }));
+    if (
+      key === 'gender' ||
+      key === 'address' ||
+      key === 'relationship' ||
+      key === 'challenge'
+    ) {
+      setProfile((previous) => ({ ...previous, [key]: value }));
+    }
     setError('');
   };
 
@@ -272,10 +280,18 @@ function AppContent() {
 
   const heading = (kicker: string, title: string, subtitle?: string) => (
     <>
-      <p className="nora-kicker">{kicker}</p>
-      <h1 className="nora-title" data-testid="text-step-title">
-        {title}
-      </h1>
+      {title ? (
+        <>
+          <p className="nora-kicker">{kicker}</p>
+          <h1 className="nora-title" data-testid="text-step-title">
+            {title}
+          </h1>
+        </>
+      ) : (
+        <h1 className="nora-title" data-testid="text-step-title">
+          {kicker}
+        </h1>
+      )}
       {subtitle && <p className="nora-subtitle">{subtitle}</p>}
     </>
   );
