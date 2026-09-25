@@ -315,7 +315,7 @@ function App() {
                 Let's start <ArrowRight size={18} />
               </button>
             </div>
-          </main>
+          </div>
         );
       case 'adult-name':
         return (
@@ -483,15 +483,17 @@ function App() {
           {started && current !== 'plan' && <span className="nora-topbar-note">{progress}%</span>}
         </header>
         {started && current !== 'plan' && <div className="nora-progress" aria-label={`${progress}%`}><div className="nora-progress-fill" style={{ width: `${progress}%` }} /></div>}
-        <main className="nora-main">{screen()}</main>
+        <main className={`nora-main ${current === 'welcome' ? 'is-welcome' : ''}`}>{screen()}</main>
         {showFooter && (
           <footer className="nora-footer">
             <button type="button" className="nora-button nora-button-quiet" onClick={back} disabled={stepIndex === 1} data-testid="button-back">
               <ArrowLeft size={17} /> Back
             </button>
-            <button type="button" className="nora-button" onClick={next} disabled={isChallengeStop} data-testid="button-continue">
-              {ctaLabel} <ArrowRight size={17} />
-            </button>
+            {!isChallengeStop && (
+              <button type="button" className="nora-button" onClick={next} data-testid="button-continue">
+                {ctaLabel} <ArrowRight size={17} />
+              </button>
+            )}
           </footer>
         )}
       </div>

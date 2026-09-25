@@ -1,0 +1,1 @@
+- [Nora onboarding copy fidelity](nora-copy-fidelity.md) — Preserve the latest supplied onboarding wording verbatim, including rough phrasing; ask before editorial changes.
