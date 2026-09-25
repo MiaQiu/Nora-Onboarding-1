@@ -23,42 +23,42 @@
 }
 
 :root {
-  --background: 270 82% 93%;
-  --foreground: 262 48% 20%;
-  --border: 266 38% 79%;
-  --input: 266 38% 79%;
-  --ring: 267 66% 47%;
-  --card: 45 60% 98%;
-  --card-foreground: 262 48% 20%;
-  --primary: 267 66% 47%;
-  --primary-foreground: 48 63% 98%;
-  --secondary: 159 64% 78%;
-  --secondary-foreground: 262 48% 20%;
-  --muted: 270 57% 87%;
-  --muted-foreground: 263 23% 43%;
-  --accent: 159 64% 78%;
-  --accent-foreground: 262 48% 20%;
+  --background: 40 33% 98%;
+  --foreground: 255 20% 16%;
+  --border: 260 13% 87%;
+  --input: 260 13% 87%;
+  --ring: 263 46% 42%;
+  --card: 40 33% 99%;
+  --card-foreground: 255 20% 16%;
+  --primary: 263 46% 42%;
+  --primary-foreground: 40 33% 99%;
+  --secondary: 266 30% 94%;
+  --secondary-foreground: 255 20% 16%;
+  --muted: 260 12% 95%;
+  --muted-foreground: 260 8% 43%;
+  --accent: 266 30% 94%;
+  --accent-foreground: 263 46% 42%;
   --app-font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
   --app-font-display: 'Outfit', ui-sans-serif, system-ui, sans-serif;
   --radius: 1.25rem;
 }
 
 .dark {
-  --background: 264 45% 18%;
-  --foreground: 270 82% 94%;
-  --border: 266 25% 38%;
-  --input: 266 25% 38%;
-  --ring: 159 64% 78%;
-  --card: 264 36% 25%;
-  --card-foreground: 270 82% 94%;
-  --primary: 267 66% 69%;
-  --primary-foreground: 262 48% 16%;
-  --secondary: 159 36% 35%;
-  --secondary-foreground: 159 64% 92%;
-  --muted: 265 31% 31%;
-  --muted-foreground: 270 30% 75%;
-  --accent: 159 36% 35%;
-  --accent-foreground: 159 64% 92%;
+  --background: 40 33% 98%;
+  --foreground: 255 20% 16%;
+  --border: 260 13% 87%;
+  --input: 260 13% 87%;
+  --ring: 263 46% 42%;
+  --card: 40 33% 99%;
+  --card-foreground: 255 20% 16%;
+  --primary: 263 46% 42%;
+  --primary-foreground: 40 33% 99%;
+  --secondary: 266 30% 94%;
+  --secondary-foreground: 255 20% 16%;
+  --muted: 260 12% 95%;
+  --muted-foreground: 260 8% 43%;
+  --accent: 266 30% 94%;
+  --accent-foreground: 263 46% 42%;
 }
 
 @layer base {
@@ -450,4 +450,309 @@
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+/* A quiet, single-column guide: the story is in the words, not the chrome. */
+@layer base {
+  html { background: #fbfaf8; }
+  body { background: #fbfaf8; color: #292631; }
+  button:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 2px solid #654e9c;
+    outline-offset: 3px;
+  }
+}
+
+.nora-app {
+  min-height: 100dvh;
+  padding: 0 22px;
+  background: #fbfaf8;
+}
+.nora-shell {
+  width: 100%;
+  max-width: 440px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  overflow: visible;
+  background: transparent;
+}
+.nora-shell::before { display: none; }
+.nora-topbar {
+  min-height: 76px;
+  padding: 24px 0 16px;
+  color: #292631;
+}
+.nora-wordmark {
+  color: #5d438f;
+  font-size: 1.47rem;
+  letter-spacing: -.07em;
+}
+.nora-topbar-note {
+  min-width: auto;
+  height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #8c8791;
+  font-family: var(--app-font-sans);
+  font-size: .75rem;
+  font-weight: 600;
+}
+.nora-progress {
+  height: 3px;
+  margin: 0;
+  background: #ebe8e8;
+}
+.nora-progress-fill { background: #7058a6; }
+.nora-main {
+  flex: 1 0 auto;
+  display: block;
+  margin: 0;
+  padding: 67px 0 54px;
+  border-radius: 0;
+  background: transparent;
+  animation: nora-enter 300ms cubic-bezier(.2,.75,.25,1) both;
+}
+.nora-main.is-welcome {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+.nora-title {
+  color: #292631;
+  font-size: clamp(1.65rem, 6.9vw, 2.04rem);
+  font-weight: 700;
+  letter-spacing: -.044em;
+  line-height: 1.17;
+}
+.nora-subtitle, .nora-copy {
+  max-width: none;
+  color: #716d77;
+  font-size: .95rem;
+  line-height: 1.7;
+}
+.nora-subtitle { margin-top: 18px; }
+.nora-copy { margin-top: 26px; }
+.nora-copy + .nora-copy { margin-top: 16px; }
+.nora-kicker {
+  margin-bottom: 15px;
+  color: #7058a6;
+  font-family: var(--app-font-sans);
+  font-size: .69rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+}
+.nora-art, .nora-art-small, .nora-complete:not(.nora-welcome) .nora-art {
+  width: 70px;
+  height: 70px;
+  margin: 0 0 23px;
+  border: 1px solid #e5dfe9;
+  border-radius: 17px;
+  background: #e6f5ef;
+  box-shadow: none;
+  animation: none;
+}
+.nora-art-small { width: 58px; height: 58px; margin-bottom: 20px; }
+.nora-options { gap: 9px; margin-top: 31px; }
+.nora-option {
+  min-height: 57px;
+  gap: 13px;
+  padding: 12px 15px;
+  border: 1px solid #e6e2e6;
+  border-radius: 12px;
+  background: #fffefd;
+  color: #39353e;
+  box-shadow: 0 1px 2px rgba(44, 35, 52, .025);
+  transition: transform 170ms ease, background-color 170ms ease, border-color 170ms ease, box-shadow 170ms ease;
+}
+.nora-option:hover { transform: translateY(-1px); border-color: #ad9bc5; }
+.nora-option:active { transform: translateY(0); }
+.nora-option.is-selected {
+  border-color: #765fac;
+  background: #f5f1fb;
+  color: #392855;
+  box-shadow: inset 0 0 0 1px #765fac;
+}
+.nora-option-mark {
+  flex-basis: 19px;
+  width: 19px;
+  height: 19px;
+  border: 1.5px solid #cbc6d0;
+}
+.nora-option-mark.is-check { border-radius: 5px; }
+.nora-option.is-selected .nora-option-mark {
+  border-color: #654e9c;
+  background: #654e9c;
+  color: #fffefd;
+}
+.nora-option-text { font-size: .89rem; font-weight: 600; line-height: 1.35; }
+.nora-option-arrow { color: #bab4bd; width: 15px; }
+.nora-option.is-selected .nora-option-arrow { color: #765fac; }
+.nora-panel {
+  margin-top: 29px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.nora-field {
+  min-height: 58px;
+  border: 1px solid #dcd7df;
+  border-radius: 11px;
+  background: #fffefd;
+  color: #292631;
+  font-size: .95rem;
+}
+.nora-field:focus { border-color: #7058a6; box-shadow: 0 0 0 3px rgba(112,88,166,.11); }
+.nora-button {
+  min-height: 48px;
+  padding: 11px 20px;
+  border-radius: 10px;
+  background: #624a96;
+  color: #fffefd;
+  font-family: var(--app-font-sans);
+  font-size: .88rem;
+  font-weight: 700;
+  box-shadow: none;
+  transition: transform 160ms ease, opacity 160ms ease, background-color 160ms ease;
+}
+.nora-button:hover { transform: translateY(-1px); background: #513b81; box-shadow: none; }
+.nora-button:active { transform: translateY(0); box-shadow: none; }
+.nora-button:disabled { box-shadow: none; }
+.nora-button-quiet {
+  padding: 8px 0;
+  color: #79737d;
+  background: transparent;
+}
+.nora-button-quiet:hover { color: #4c3a72; background: transparent; }
+.nora-footer {
+  position: sticky;
+  bottom: 0;
+  padding: 15px 0 max(22px, env(safe-area-inset-bottom));
+  border-top: 1px solid #eeebed;
+  background: #fbfaf8;
+}
+.nora-footer .nora-button:not(.nora-button-quiet) { max-width: 76%; }
+.nora-welcome.nora-complete {
+  display: block;
+  padding: 70px 0 70px;
+  background: transparent;
+}
+.nora-welcome .nora-art {
+  width: 88px;
+  height: 88px;
+  margin: 0 0 28px;
+  border-color: #e5dfe9;
+  box-shadow: none;
+}
+.nora-welcome .nora-title {
+  max-width: 420px;
+  color: #292631;
+  font-size: clamp(1.95rem, 8vw, 2.48rem);
+  line-height: 1.13;
+}
+.nora-welcome .nora-subtitle {
+  color: #716d77;
+  font-size: .95rem;
+  line-height: 1.7;
+}
+.nora-welcome .nora-actions { margin-top: 36px; }
+.nora-welcome .nora-button { background: #624a96; color: #fffefd; box-shadow: none; }
+.nora-welcome .nora-button:hover { background: #513b81; box-shadow: none; }
+
+/* Insight screens use hierarchy within the existing prose, never extra prose. */
+.nora-main.is-insight { padding-top: 69px; }
+.nora-main.is-insight .nora-title { font-size: clamp(1.75rem, 7vw, 2.13rem); }
+.nora-insight-body { margin-top: 28px; }
+.nora-insight-body .nora-copy { margin: 0; }
+.nora-insight-body .nora-copy + .nora-copy { margin-top: 20px; }
+.nora-copy strong, .nora-insight-body strong {
+  color: #3c3051;
+  font-weight: 700;
+}
+.nora-highlight {
+  color: #624a96 !important;
+  font-weight: 700;
+}
+.nora-insight-callout {
+  margin: 23px 0 0;
+  padding: 19px 21px;
+  border-left: 3px solid #806bb3;
+  border-radius: 0 10px 10px 0;
+  background: #f4f0f8;
+}
+.nora-insight-callout .nora-copy { color: #4b405c; }
+.nora-insight-callout + .nora-copy { margin-top: 24px; }
+.nora-insight-line {
+  display: block;
+  padding: 10px 0;
+  border-bottom: 1px solid #ebe6ed;
+  color: #4a3c60;
+  font-weight: 600;
+}
+.nora-insight-line:first-child { padding-top: 0; }
+.nora-insight-line:last-child { border-bottom: 0; }
+.nora-insight-trio {
+  margin: 20px 0;
+  padding: 6px 18px;
+  border: 1px solid #e8e0ee;
+  border-radius: 12px;
+  background: #fffefd;
+}
+.nora-insight-quote {
+  display: block;
+  margin-top: 17px;
+  padding-left: 17px;
+  border-left: 2px solid #a997c8;
+  color: #4f3e6d;
+  font-weight: 600;
+}
+.nora-plan {
+  margin-top: 27px;
+  padding: 0;
+  border: 1px solid #e9e3ec;
+  border-radius: 13px;
+  background: #fffefd;
+  color: #5d5762;
+  box-shadow: 0 7px 25px rgba(60, 44, 72, .035);
+}
+.nora-plan p { padding: 20px 22px; font-size: .92rem; line-height: 1.7; }
+.nora-plan-line { display: block; }
+.nora-plan-line + .nora-plan-line { margin-top: 10px; }
+.nora-plan p + p {
+  margin: 0;
+  padding: 20px 22px;
+  border-top: 1px solid #eee9ef;
+}
+.nora-plan strong { color: #59428c; font-weight: 700; }
+.nora-plan p:last-child { color: #6b577e; background: #f8f5fa; border-radius: 0 0 12px 12px; }
+
+@media (min-width: 700px) {
+  .nora-app { padding: 0 24px; }
+  .nora-shell {
+    max-width: 440px;
+    min-height: 100dvh;
+    margin: 0 auto;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .nora-topbar { padding: 32px 0 18px; }
+  .nora-progress { margin: 0; }
+  .nora-main { margin: 0; padding: 82px 0 60px; }
+  .nora-main.is-insight { padding-top: 82px; }
+  .nora-main.is-welcome { margin: 0; padding: 0; }
+  .nora-footer { padding: 18px 0 32px; }
+  .nora-welcome.nora-complete { padding: 92px 0 70px; }
+  .nora-welcome .nora-art {
+    position: static;
+    width: 88px;
+    height: 88px;
+    margin: 0 0 28px;
+  }
+  .nora-welcome .nora-title { max-width: 420px; margin: 0; }
+  .nora-welcome .nora-actions { max-width: none; }
+  .nora-option { min-height: 59px; padding: 12px 16px; }
 }
