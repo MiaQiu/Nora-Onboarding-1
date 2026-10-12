@@ -664,6 +664,7 @@
 /* Insight screens use hierarchy within the existing prose, never extra prose. */
 .nora-main.is-insight { padding-top: 69px; }
 .nora-main.is-insight .nora-title { font-size: clamp(1.75rem, 7vw, 2.13rem); }
+.nora-main.is-insight .nora-insight-long-title { font-size: 1.45rem; line-height: 1.35; }
 .nora-insight-body { margin-top: 28px; }
 .nora-insight-body .nora-copy { margin: 0; }
 .nora-insight-body .nora-copy + .nora-copy { margin-top: 20px; }
