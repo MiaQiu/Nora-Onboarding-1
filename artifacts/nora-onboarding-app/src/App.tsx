@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, ChevronRight } from 'lucide-react';
 import { agreementChoices, barrierChoices, screenMediaStatements } from './flow-content';
+import { FrustrationScreen, emptyFrustrationAnswers, frustrationCtaLabels, frustrationHasAnswer, frustrationInsightSteps, frustrationSteps, isFrustrationStep } from './frustration-flow';
+import type { FrustrationAnswers, FrustrationStep } from './frustration-flow';
 
 type Choice = { value: string; label: string };
 type Step =
@@ -30,7 +32,8 @@ type Step =
   | 'transition'
   | 'play'
   | 'nora'
-  | 'plan';
+  | 'plan'
+  | FrustrationStep;
 
 type Profile = {
   adultName: string;
@@ -199,6 +202,8 @@ function App() {
     cortex: '',
   });
 
+  const [frustration, setFrustration] = useState<FrustrationAnswers>(emptyFrustrationAnswers);
+
   const childName = profile.childName.trim() || 'Ethan';
   const replaceEthan = (label: string) => label.replaceAll('Ethan', childName);
   const today = new Date();
@@ -238,7 +243,9 @@ function App() {
             'nora',
             'plan',
           ] as Step[])
-        : []),
+        : profile.challenge === 'frustrated'
+          ? frustrationSteps
+          : []),
     ],
     [profile.challenge],
   );
@@ -258,7 +265,7 @@ function App() {
       setAnswers((previous) => ({ ...previous, [key]: value }));
     }
     setInvalid(false);
-    if (key === 'challenge' && value === 'screen') {
+    if (key === 'challenge' && (value === 'screen' || value === 'frustrated')) {
       setStepIndex((index) => index + 1);
     }
   };
@@ -283,7 +290,8 @@ function App() {
     if (current === 'child-name') return profile.childName.trim().length > 0;
     if (current === 'birth-month') return Boolean(profile.birthMonth) && profile.birthMonth <= currentMonth;
     if (current === 'gender') return Boolean(profile.gender);
-    if (current === 'challenge') return profile.challenge === 'screen';
+    if (current === 'challenge') return profile.challenge === 'screen' || profile.challenge === 'frustrated';
+    if (isFrustrationStep(current)) return frustrationHasAnswer(current, frustration);
     if (current.startsWith('assessment-')) return Boolean(answers.ratings[current]);
     if (current === 'hardest' || current === 'dopamine' || current === 'worked' || current === 'stress' || current === 'barriers' || current === 'goal' || current === 'cortex') {
       return Boolean(answers[current]);
@@ -327,6 +335,18 @@ function App() {
   );
 
   const screen = () => {
+    if (isFrustrationStep(current)) {
+      return (
+        <FrustrationScreen
+          step={current}
+          childName={childName}
+          answers={frustration}
+          setAnswers={setFrustration}
+          clearInvalid={() => setInvalid(false)}
+          art={(small) => <NoraArt small={small} />}
+        />
+      );
+    }
     if (current.startsWith('assessment-')) {
       const statement = screenMediaStatements[Number(current.split('-')[1])];
       return (
@@ -536,20 +556,24 @@ function App() {
     play: 'How does Nora help?',
     nora: 'create an account to see your 8 weeks plan.',
   };
-  const ctaLabel = ctaLabels[current] ?? 'Continue';
+  const ctaLabel = ctaLabels[current] ?? frustrationCtaLabels[current] ?? 'Continue';
 
-  const isChallengeStop = current === 'challenge' && profile.challenge !== '' && profile.challenge !== 'screen';
-  const showFooter = started && current !== 'plan';
+  const isChallengeStop = current === 'challenge' && profile.challenge !== '' && profile.challenge !== 'screen' && profile.challenge !== 'frustrated';
+  const isPlan = current === 'plan' || current === 'f-plan';
+  const showFooter = started && !isPlan;
 
   return (
     <div className="nora-app">
       <div className="nora-shell">
         <header className="nora-topbar">
           <span className="nora-wordmark">nora</span>
-          {started && current !== 'plan' && <span className="nora-topbar-note">{progress}%</span>}
+          {started && !isPlan && <span className="nora-topbar-note">{progress}%</span>}
         </header>
-        {started && current !== 'plan' && <div className="nora-progress" aria-label={`${progress}%`}><div className="nora-progress-fill" style={{ width: `${progress}%` }} /></div>}
-        <main key={current} className={`nora-main ${current === 'welcome' ? 'is-welcome' : ''} ${(['intro', 'context', 'why', 'cortex-help', 'practice', 'transition', 'play', 'nora', 'plan'] as Step[]).includes(current) ? 'is-insight' : ''}`}>{screen()}</main>
+        {started && !isPlan && <div className="nora-progress" aria-label={`${progress}%`}><div className="nora-progress-fill" style={{ width: `${progress}%` }} /></div>}
+        <main key={current} className={`nora-main ${current === 'welcome' ? 'is-welcome' : ''} ${(['intro', 'context', 'why', 'cortex-help', 'practice', 'transition', 'play', 'nora', 'plan'] as Step[]).includes(current) || frustrationInsightSteps.includes(current) ? 'is-insight' : ''}`}>
+          {screen()}
+          {invalid && isFrustrationStep(current) && <p className="nora-copy" role="alert" data-testid="text-answer-required">Please select an answer to continue.</p>}
+        </main>
         {showFooter && (
           <footer className="nora-footer">
             <button type="button" className="nora-button nora-button-quiet" onClick={back} disabled={stepIndex === 1} data-testid="button-back">
