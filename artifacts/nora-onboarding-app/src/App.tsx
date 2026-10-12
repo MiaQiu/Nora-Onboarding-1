@@ -17,6 +17,7 @@ type Step =
   | 'stops'
   | 'dopamine'
   | 'context'
+  | 'differences'
   | 'strategies'
   | 'worked'
   | 'stress'
@@ -45,6 +46,7 @@ type Answers = {
   hardest: string;
   stops: string[];
   dopamine: string;
+  differences: string[];
   strategies: string[];
   worked: string;
   stress: string;
@@ -88,6 +90,16 @@ const hardestChoices: Choice[] = [
   { value: 'upset', label: 'He gets very upset when it ends' },
   { value: 'after', label: "He won't do anything else afterward" },
   { value: 'argue', label: 'I end up arguing or yelling' },
+];
+
+const differenceChoices: Choice[] = [
+  { value: 'none', label: 'None that I know of' },
+  { value: 'developmental-delays', label: 'Developmental Delays' },
+  { value: 'adhd', label: 'ADHD' },
+  { value: 'asd', label: 'ASD' },
+  { value: 'anxiety', label: 'Anxiety' },
+  { value: 'another', label: 'Another difference not listed here' },
+  { value: 'suspected', label: 'I suspected one of those, but haven’t gotten any diagnoses yet' },
 ];
 
 const strategyChoices: Choice[] = [
@@ -178,6 +190,7 @@ function App() {
     hardest: '',
     stops: [],
     dopamine: '',
+    differences: [],
     strategies: [],
     worked: '',
     stress: '',
@@ -210,6 +223,7 @@ function App() {
             'stops',
             'dopamine',
             'context',
+            'differences',
             'strategies',
             'worked',
             'stress',
@@ -237,7 +251,7 @@ function App() {
     setInvalid(false);
   };
 
-  const choose = (key: Exclude<keyof Answers, 'ratings' | 'stops' | 'strategies'> | 'relationship' | 'challenge' | 'gender', value: string) => {
+  const choose = (key: Exclude<keyof Answers, 'ratings' | 'stops' | 'strategies' | 'differences'> | 'relationship' | 'challenge' | 'gender', value: string) => {
     if (key in profile) {
       setProfile((previous) => ({ ...previous, [key]: value }));
     } else {
@@ -249,12 +263,15 @@ function App() {
     }
   };
 
-  const toggle = (key: 'stops' | 'strategies', value: string) => {
+  const toggle = (key: 'stops' | 'strategies' | 'differences', value: string) => {
     setAnswers((previous) => {
       const existing = previous[key];
-      const next = existing.includes(value)
+      let next = existing.includes(value)
         ? existing.filter((item) => item !== value)
         : [...existing, value];
+      if (key === 'differences' && !existing.includes(value)) {
+        next = value === 'none' ? ['none'] : next.filter((item) => item !== 'none');
+      }
       return { ...previous, [key]: next };
     });
     setInvalid(false);
@@ -271,7 +288,7 @@ function App() {
     if (current === 'hardest' || current === 'dopamine' || current === 'worked' || current === 'stress' || current === 'barriers' || current === 'goal' || current === 'cortex') {
       return Boolean(answers[current]);
     }
-    if (current === 'stops' || current === 'strategies') return answers[current].length > 0;
+    if (current === 'stops' || current === 'strategies' || current === 'differences') return answers[current].length > 0;
     return true;
   };
 
@@ -293,7 +310,7 @@ function App() {
     <div className="nora-options" data-testid={`options-${key}`}>
       {choices.map((choice) => {
         const selected = multi
-          ? (answers[key as 'stops' | 'strategies'] as string[]).includes(choice.value)
+          ? (answers[key as 'stops' | 'strategies' | 'differences'] as string[]).includes(choice.value)
           : profile[key as keyof Profile] === choice.value || answers[key as keyof Answers] === choice.value;
         return (
           <ChoiceButton
@@ -301,7 +318,7 @@ function App() {
             choice={{ ...choice, label: replaceEthan(choice.label) }}
             selected={selected}
             multi={multi}
-            onSelect={() => (multi ? toggle(key as 'stops' | 'strategies', choice.value) : choose(key as Parameters<typeof choose>[0], choice.value))}
+            onSelect={() => (multi ? toggle(key as 'stops' | 'strategies' | 'differences', choice.value) : choose(key as Parameters<typeof choose>[0], choice.value))}
             testId={`choice-${key}-${choice.value}`}
           />
         );
@@ -414,6 +431,8 @@ function App() {
         );
       case 'strategies':
         return <><h1 className="nora-title" data-testid="text-step-title">What have you already tried to make screen time easier to end? (Select all that apply.)</h1>{optionList('strategies', strategyChoices, true)}</>;
+      case 'differences':
+        return <><h1 className="nora-title" data-testid="text-step-title">Does {childName} have any learning and thinking differences?</h1><p className="nora-copy">Select all that apply.</p>{optionList('differences', differenceChoices, true)}</>;
       case 'worked':
         return <><h1 className="nora-title" data-testid="text-step-title">How well have those approaches worked?</h1>{optionList('worked', workedChoices)}</>;
       case 'stress':
