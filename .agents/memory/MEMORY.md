@@ -1,2 +1,3 @@
 - [Nora onboarding copy fidelity](nora-copy-fidelity.md) — Preserve the latest supplied onboarding wording verbatim, including rough phrasing; ask before editorial changes.
 - [Nora onboarding visual direction](nora-onboarding-visual-direction.md) — Keep the flow light, compact, and purple-accented; the user rejected the saturated full-purple treatment.
+- [Nora outcome claims](nora-outcome-claims.md) — Time-bound outcomes are goals, not guarantees; coping observations must not become diagnoses.

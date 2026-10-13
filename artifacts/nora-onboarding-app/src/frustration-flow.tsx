@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { ReactNode } from 'react';
 import { Check, ChevronRight } from 'lucide-react';
 import { agreementChoices } from './flow-content';
+import { AgreementPrompt, choiceVisual } from './visuals';
 
 type Choice = { value: string; label: string };
 
@@ -118,10 +119,11 @@ export function frustrationHasAnswer(step: string, a: FrustrationAnswers) {
   return true;
 }
 
-function Option({ choice, selected, multi, onSelect, testId }: { choice: Choice; selected: boolean; multi?: boolean; onSelect: () => void; testId: string }) {
+function Option({ choice, selected, multi, onSelect, testId, visual }: { choice: Choice; selected: boolean; multi?: boolean; onSelect: () => void; testId: string; visual?: ReactNode }) {
   return (
     <button type="button" className={`nora-option ${selected ? 'is-selected' : ''}`} onClick={onSelect} aria-pressed={selected} data-testid={testId}>
       <span className={`nora-option-mark ${multi ? 'is-check' : ''}`}>{selected && <Check size={14} strokeWidth={3} />}</span>
+      {visual}
       <span className="nora-option-text">{choice.label}</span>
       <ChevronRight size={17} className="nora-option-arrow" aria-hidden="true" />
     </button>
@@ -165,7 +167,7 @@ export function FrustrationScreen({
   const single = (key: 'worked', choices: Choice[]) => (
     <div className="nora-options" data-testid={`options-${step}`}>
       {choices.map((c) => (
-        <Option key={c.value} choice={c} selected={answers[key] === c.value} testId={`choice-${step}-${c.value}`}
+        <Option key={c.value} choice={c} selected={answers[key] === c.value} testId={`choice-${step}-${c.value}`} visual={choiceVisual(step, c.value)}
           onSelect={() => { setAnswers((p) => ({ ...p, [key]: c.value })); clearInvalid(); }} />
       ))}
     </div>
@@ -194,6 +196,7 @@ export function FrustrationScreen({
     const statement = frustrationStatements[Number(step.split('-')[2])];
     return (
       <>
+        <AgreementPrompt />
         {title(n(statement))}
         <div className="nora-options" data-testid={`options-${step}`}>
           {agreementChoices.map((c) => (

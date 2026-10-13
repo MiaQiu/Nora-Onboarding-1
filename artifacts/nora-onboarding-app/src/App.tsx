@@ -1,8 +1,11 @@
 import { useMemo, useState } from 'react';
+import type { ReactNode } from 'react';
 import { ArrowLeft, ArrowRight, Check, ChevronRight } from 'lucide-react';
 import { agreementChoices, barrierChoices, screenMediaStatements } from './flow-content';
 import { FrustrationScreen, emptyFrustrationAnswers, frustrationCtaLabels, frustrationHasAnswer, frustrationInsightSteps, frustrationSteps, isFrustrationStep } from './frustration-flow';
 import type { FrustrationAnswers, FrustrationStep } from './frustration-flow';
+import { AgreementPrompt, InsightIllustration, choiceVisual } from './visuals';
+import { frequencyChoices, signalQuestions, teenChoices } from './signal-content';
 
 type Choice = { value: string; label: string };
 type Step =
@@ -23,6 +26,9 @@ type Step =
   | 'strategies'
   | 'worked'
   | 'stress'
+  | 'teen'
+  | `signal-${number}`
+  | 'windows'
   | 'goal'
   | 'barriers'
   | 'why'
@@ -53,6 +59,8 @@ type Answers = {
   strategies: string[];
   worked: string;
   stress: string;
+  teen: string;
+  signals: Record<string, string>;
   goal: string;
   barriers: string;
   cortex: string;
@@ -152,12 +160,14 @@ function ChoiceButton({
   multi,
   onSelect,
   testId,
+  visual,
 }: {
   choice: Choice;
   selected: boolean;
   multi?: boolean;
   onSelect: () => void;
   testId: string;
+  visual?: ReactNode;
 }) {
   return (
     <button
@@ -170,6 +180,7 @@ function ChoiceButton({
       <span className={`nora-option-mark ${multi ? 'is-check' : ''}`}>
         {selected && <Check size={14} strokeWidth={3} />}
       </span>
+      {visual}
       <span className="nora-option-text">{choice.label}</span>
       <ChevronRight size={17} className="nora-option-arrow" aria-hidden="true" />
     </button>
@@ -197,6 +208,8 @@ function App() {
     strategies: [],
     worked: '',
     stress: '',
+    teen: '',
+    signals: {},
     goal: '',
     barriers: '',
     cortex: '',
@@ -232,11 +245,14 @@ function App() {
             'strategies',
             'worked',
             'stress',
+            'teen',
             'barriers',
             'goal',
             'why',
+            ...signalQuestions.map((_, index) => `signal-${index}` as Step),
             'cortex',
             'cortex-help',
+            'windows',
             'practice',
             'transition',
             'play',
@@ -258,7 +274,7 @@ function App() {
     setInvalid(false);
   };
 
-  const choose = (key: Exclude<keyof Answers, 'ratings' | 'stops' | 'strategies' | 'differences'> | 'relationship' | 'challenge' | 'gender', value: string) => {
+  const choose = (key: Exclude<keyof Answers, 'ratings' | 'signals' | 'stops' | 'strategies' | 'differences'> | 'relationship' | 'challenge' | 'gender', value: string) => {
     if (key in profile) {
       setProfile((previous) => ({ ...previous, [key]: value }));
     } else {
@@ -293,6 +309,8 @@ function App() {
     if (current === 'challenge') return profile.challenge === 'screen' || profile.challenge === 'frustrated';
     if (isFrustrationStep(current)) return frustrationHasAnswer(current, frustration);
     if (current.startsWith('assessment-')) return Boolean(answers.ratings[current]);
+    if (current.startsWith('signal-')) return Boolean(answers.signals[current]);
+    if (current === 'teen') return Boolean(answers.teen);
     if (current === 'hardest' || current === 'dopamine' || current === 'worked' || current === 'stress' || current === 'barriers' || current === 'goal' || current === 'cortex') {
       return Boolean(answers[current]);
     }
@@ -314,7 +332,7 @@ function App() {
     setStepIndex((value) => Math.max(0, value - 1));
   };
 
-  const optionList = (key: Exclude<keyof Answers, 'ratings'> | 'relationship' | 'challenge' | 'gender', choices: Choice[], multi = false) => (
+  const optionList = (key: Exclude<keyof Answers, 'ratings' | 'signals'> | 'relationship' | 'challenge' | 'gender', choices: Choice[], multi = false) => (
     <div className="nora-options" data-testid={`options-${key}`}>
       {choices.map((choice) => {
         const selected = multi
@@ -328,6 +346,7 @@ function App() {
             multi={multi}
             onSelect={() => (multi ? toggle(key as 'stops' | 'strategies' | 'differences', choice.value) : choose(key as Parameters<typeof choose>[0], choice.value))}
             testId={`choice-${key}-${choice.value}`}
+            visual={choiceVisual(key, choice.value)}
           />
         );
       })}
@@ -351,6 +370,7 @@ function App() {
       const statement = screenMediaStatements[Number(current.split('-')[1])];
       return (
         <>
+          <AgreementPrompt />
           <h1 className="nora-title" data-testid="text-step-title">{statement}</h1>
           <div className="nora-options" data-testid={`options-${current}`}>
             {agreementChoices.map((choice) => (
@@ -369,7 +389,42 @@ function App() {
         </>
       );
     }
+    if (current.startsWith('signal-')) {
+      const question = signalQuestions[Number(current.split('-')[1])];
+      return (
+        <>
+          <h1 className="nora-title" data-testid="text-step-title">{question}</h1>
+          <div className="nora-options" data-testid={`options-${current}`}>
+            {frequencyChoices.map((choice) => (
+              <ChoiceButton
+                key={choice.value}
+                choice={choice}
+                selected={answers.signals[current] === choice.value}
+                testId={`choice-${current}-${choice.value}`}
+                onSelect={() => {
+                  setAnswers((previous) => ({ ...previous, signals: { ...previous.signals, [current]: choice.value } }));
+                  setInvalid(false);
+                }}
+              />
+            ))}
+          </div>
+        </>
+      );
+    }
     switch (current) {
+      case 'teen':
+        return <><h1 className="nora-title" data-testid="text-step-title">Do you worry those challenges might get harder as your child becomes a teenager?</h1>{optionList('teen', teenChoices)}</>;
+      case 'windows':
+        return (
+          <>
+            <h1 className="nora-title" data-testid="text-step-title">The windows of opportunity.</h1>
+            <div className="nora-insight-body nora-insight-large">
+              <p className="nora-copy">At {childName}’s age, the prefrontal cortex is still developing.</p>
+              <p className="nora-copy">This is a key time to practise <strong className="nora-highlight">focus, self-control, and managing frustration.</strong></p>
+              <div className="nora-insight-callout"><p className="nora-copy"><strong>And you have the greatest influence on their learning.</strong></p></div>
+            </div>
+          </>
+        );
       case 'welcome':
         return (
           <div className="nora-complete nora-welcome">
@@ -428,8 +483,10 @@ function App() {
           <>
             <NoraArt small />
             <h1 className="nora-title" data-testid="text-step-title">You’re not alone.</h1>
-            <div className="nora-insight-body">
-              <p className="nora-copy">Many parents face excessive screen time at {childAge} years old. It’s often less about behavior and more about <strong>something deeper beneath the surface.</strong> Let’s look at whether we can find any patterns.</p>
+            <div className="nora-insight-body nora-insight-large">
+              <p className="nora-copy">Many parents face excessive screen time at {childAge} years old.</p>
+              <p className="nora-copy">It’s often less about behavior and more about <strong className="nora-highlight">something deeper beneath the surface.</strong></p>
+              <p className="nora-copy">Let’s look at whether we can find any patterns.</p>
             </div>
           </>
         );
@@ -443,9 +500,10 @@ function App() {
         return (
           <>
             <h1 className="nora-title nora-insight-long-title" data-testid="text-step-title">screens are incredibly stimulating—they deliver constant novelty and excitement in a way that few other activities can match.</h1>
-            <div className="nora-insight-body">
-              <p className="nora-copy">This makes stopping genuinely hard for many kids. When the stimulation suddenly stops, their nervous system has to shift gears quickly, and that shift can feel really uncomfortable.</p>
-              <div className="nora-insight-callout"><p className="nora-copy">This is called <strong>the dopamine loop.</strong> The meltdown isn't defiance or manipulation—<strong>it's a brain that hasn't caught up to the transition yet.</strong></p></div>
+            <div className="nora-insight-body nora-insight-large">
+              <p className="nora-copy"><strong>This makes stopping genuinely hard for many kids.</strong></p>
+              <p className="nora-copy">When the stimulation suddenly stops, their nervous system has to shift gears quickly, and that shift can feel really uncomfortable.</p>
+              <div className="nora-insight-callout"><p className="nora-copy">This is called <strong>the dopamine loop.</strong></p><p className="nora-copy">The meltdown isn't defiance or manipulation—<strong className="nora-highlight">it's a brain that hasn't caught up to the transition yet.</strong></p></div>
             </div>
           </>
         );
@@ -465,9 +523,12 @@ function App() {
         return (
           <>
             <h1 className="nora-title" data-testid="text-step-title">Why hasn’t it worked so far?</h1>
-            <div className="nora-insight-body">
-              <p className="nora-copy">Most screen-time strategies focus on getting {childName} to put the device down. <strong className="nora-highlight">But that’s only the surface.</strong> Underneath, At that moment, {childName} has to switch attention, cope with disappointment, and move on.</p>
+            <div className="nora-insight-body nora-insight-large">
+              <p className="nora-copy">Most screen-time strategies focus on getting {childName} to put the device down.</p>
+              <p className="nora-copy"><strong className="nora-highlight">But that’s only the surface.</strong></p>
+              <p className="nora-copy">Underneath, At that moment, {childName} has to switch attention, cope with disappointment, and move on.</p>
               <div className="nora-insight-callout"><p className="nora-copy"><strong>Those skills are still developing.</strong></p></div>
+              <p className="nora-copy">Let’s look at the hidden signals you might has missed to understand how they are really coping.</p>
             </div>
           </>
         );
@@ -487,7 +548,8 @@ function App() {
         return (
           <>
             <h1 className="nora-title" data-testid="text-step-title">You’re part of how {childName} learns.</h1>
-            <div className="nora-insight-body">
+            <InsightIllustration scene="practice" />
+            <div className="nora-insight-body nora-insight-large">
               <p className="nora-copy">Small moments with you give {childName} chances to <strong className="nora-highlight">wait, handle “no,” try a different plan, and recover</strong> when something doesn’t work.</p>
               <div className="nora-insight-callout"><p className="nora-copy">Those are the same kinds of skills screen-time endings ask for.</p></div>
             </div>
@@ -497,6 +559,7 @@ function App() {
         return (
           <>
             <h1 className="nora-title nora-insight-long-title" data-testid="text-step-title">We will start with understanding what’s happening during the screen time transition first and coach you how to apply strategies to make screentime predictable from your child first.</h1>
+            <InsightIllustration scene="transition" />
             <div className="nora-insight-body">
               <div className="nora-insight-callout"><p className="nora-copy">Once the screentime becomes predictable. We will coach you techniques to practice with {childName} during your daily play time if {childName} still find it challenging.</p></div>
             </div>
@@ -506,6 +569,7 @@ function App() {
         return (
           <>
             <h1 className="nora-title" data-testid="text-step-title">Why start with play?</h1>
+            <InsightIllustration scene="play" />
             <div className="nora-insight-body">
               <p className="nora-copy">Imagine {childName} builds a tower and it falls. They feel disappointed—but <strong className="nora-highlight">the stakes are low, and you’re right there.</strong></p>
               <div className="nora-insight-callout"><p className="nora-copy">Play gives {childName} room to practise trying again or changing plans.</p></div>
@@ -535,9 +599,14 @@ function App() {
           <div className="nora-complete">
             <NoraArt />
             <h1 className="nora-title" data-testid="text-step-title">{childName}’s starting plan.</h1>
+            <div className="nora-plan-goal" data-testid="text-two-month-goal">
+              <p className="nora-plan-goal-title">Our two-month goal: Help {childName} manage screen time without tantrums.</p>
+              <p className="nora-plan-goal-note" data-testid="text-goal-disclaimer">Progress varies from child to child; this is a goal, not a guaranteed outcome.</p>
+            </div>
             <div className="nora-plan" data-testid="text-starting-plan">
               <p><span className="nora-plan-line">Your goal: <strong>{goal}</strong>.</span>{' '}<span className="nora-plan-line">The hard moment: <strong>{replaceEthan(pattern)}</strong>.</span>{' '}<span className="nora-plan-line">What you’ve tried: <strong>{replaceEthan(tried)}</strong></span></p>
               <p>Start with: Helping {childName} practise switching, coping, and moving on in small moments together.</p>
+              <p data-testid="text-plan-closing">You’re not just making screen-time endings easier. You’re building essential life skills and a stronger parent-child bond that will last for years.</p>
               <p>No payment required to start. First three times is free!</p>
             </div>
           </div>
@@ -570,9 +639,9 @@ function App() {
           {started && !isPlan && <span className="nora-topbar-note">{progress}%</span>}
         </header>
         {started && !isPlan && <div className="nora-progress" aria-label={`${progress}%`}><div className="nora-progress-fill" style={{ width: `${progress}%` }} /></div>}
-        <main key={current} className={`nora-main ${current === 'welcome' ? 'is-welcome' : ''} ${(['intro', 'context', 'why', 'cortex-help', 'practice', 'transition', 'play', 'nora', 'plan'] as Step[]).includes(current) || frustrationInsightSteps.includes(current) ? 'is-insight' : ''}`}>
+        <main key={current} className={`nora-main ${current === 'welcome' ? 'is-welcome' : ''} ${(['intro', 'context', 'why', 'cortex-help', 'windows', 'practice', 'transition', 'play', 'nora', 'plan'] as Step[]).includes(current) || frustrationInsightSteps.includes(current) ? 'is-insight' : ''}`}>
           {screen()}
-          {invalid && isFrustrationStep(current) && <p className="nora-copy" role="alert" data-testid="text-answer-required">Please select an answer to continue.</p>}
+          {invalid && (isFrustrationStep(current) || current === 'teen' || current.startsWith('signal-')) && <p className="nora-copy" role="alert" data-testid="text-answer-required">Please select an answer to continue.</p>}
         </main>
         {showFooter && (
           <footer className="nora-footer">
