@@ -14,3 +14,31 @@ mtime_ms = 1791855320000
 storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:61ba5b28-f595-46ca-9df6-13f0d656f6c8/c7923da1-e914-454a-993c-ef40a5ca0977/b69f1012-43c1-4dbf-9deb-ca175a05764a"
 storage_version_token = "1791855362999368"
 content_type = "image/jpeg"
+
+[[outputs]]
+id = "gE4_aJr1BgMDD0hYdcXEK"
+uri = "file://artifacts/nora-onboarding-app/public/nora-prefrontal-anatomical.jpg"
+type = "image"
+title = "Prefrontal cortex illustration"
+description = "Anatomical-style educational illustration with the anterior prefrontal region highlighted in purple."
+logical_id = "69dc606f-e592-482e-ab5f-5944ddb3f563"
+content_hash = "sha256:94af45fc29d9967af9de72dfe308791de698fc22c3622fb574d56b4fe66281bf"
+size = 62793
+mtime_ms = 1791855735520
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:61ba5b28-f595-46ca-9df6-13f0d656f6c8/69dc606f-e592-482e-ab5f-5944ddb3f563/805a9608-899d-4232-ba90-2ce0dfae9289"
+storage_version_token = "1791855792420098"
+content_type = "image/jpeg"
+
+[[outputs]]
+id = "8jfkk2gB1Km9485ZXz5SE"
+uri = "file://artifacts/nora-onboarding-app/public/nora-girl-before-after.jpg"
+type = "image"
+title = "Girl before-and-after illustration"
+description = "The girl version shown in the starting plan when Girl is selected."
+logical_id = "a43c06c6-318d-4aab-bb35-4741ed68f0c6"
+content_hash = "sha256:19e292e926ee17715956e5d27c34d178bcb9ac4f847aeef3f6820a312970caf7"
+size = 113820
+mtime_ms = 1791855735439
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:61ba5b28-f595-46ca-9df6-13f0d656f6c8/a43c06c6-318d-4aab-bb35-4741ed68f0c6/cf60ee61-bb16-416e-abef-6d12170022ed"
+storage_version_token = "1791855793649677"
+content_type = "image/jpeg"

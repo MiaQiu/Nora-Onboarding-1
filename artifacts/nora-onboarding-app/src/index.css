@@ -779,3 +779,7 @@
 .nora-goal-comparison { margin: 20px 0 15px; }
 .nora-goal-labels { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; color: #624a96; font-size: .86rem; font-weight: 700; text-align: center; }
 .nora-goal-image { display: block; width: 100%; height: auto; border-radius: 10px; }
+.nora-cortex-figure { margin: 24px 0 0; }
+.nora-cortex-figure .nora-illustration { margin-top: 0; border-radius: 12px; }
+.nora-cortex-figure figcaption { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px; color: #624a96; font-size: .86rem; line-height: 1.5; }
+.nora-cortex-key { width: 12px; height: 12px; border-radius: 3px; background: #9774d2; flex: 0 0 12px; }

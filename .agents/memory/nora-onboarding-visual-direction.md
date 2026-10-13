@@ -20,3 +20,9 @@ Use warm parent-and-child illustrations for the parent-learning and play insight
 **Why:** The user disliked the original learning/play visuals and explicitly selected warm parent-and-child illustrations. They later requested no visual on the screen-time transition page.
 
 **How to apply:** Place learning/play illustrations below the body text. Keep the screen-time transition page text-only unless the user asks otherwise.
+
+Use an anatomical, scientific-looking visual for the prefrontal-cortex explanation, not a simplified cartoon brain.
+
+**Why:** The user explicitly requested a more scientific visual for this topic.
+
+**How to apply:** Highlight the anterior prefrontal region clearly; keep educational illustrations distinct from diagnostic scans or claims of clinical validation.

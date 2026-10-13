@@ -7,6 +7,7 @@ import type { FrustrationAnswers, FrustrationStep } from './frustration-flow';
 import { AgreementPrompt, InsightIllustration, choiceVisual } from './visuals';
 import { frequencyChoices, signalQuestions, teenChoices } from './signal-content';
 import { CortexIllustration } from './cortex-illustration';
+import { getPlanVisual } from './plan-visual';
 
 type Choice = { value: string; label: string };
 type Step =
@@ -590,6 +591,7 @@ function App() {
           />
         );
       case 'plan': {
+        const planVisual = getPlanVisual(profile.gender);
         const goal = goalChoices.find((choice) => choice.value === answers.goal)?.label ?? '';
         const pattern = [
           hardestChoices.find((choice) => choice.value === answers.hardest)?.label ?? '',
@@ -602,15 +604,15 @@ function App() {
             <h1 className="nora-title" data-testid="text-step-title">{childName}’s starting plan.</h1>
             <div className="nora-plan-goal" data-testid="text-two-month-goal">
               <p className="nora-plan-goal-title">Our two-month goal: Help {childName} manage screen time without tantrums.</p>
-              <figure className="nora-goal-comparison">
+              {planVisual && <figure className="nora-goal-comparison">
                 <div className="nora-goal-labels"><span>Before</span><span>After — our goal</span></div>
                 <img
-                  src={`${import.meta.env.BASE_URL}nora-two-month-before-after.jpg`}
-                  alt="Illustrated goal: a child upset at the end of screen time, followed by the same child calmly putting the tablet away and playing with a supportive parent."
+                  src={`${import.meta.env.BASE_URL}${planVisual.file}`}
+                  alt={planVisual.alt}
                   className="nora-goal-image"
                   data-testid="img-two-month-before-after"
                 />
-              </figure>
+              </figure>}
               <p className="nora-plan-goal-note" data-testid="text-goal-disclaimer">Progress varies from child to child; this is a goal, not a guaranteed outcome.</p>
             </div>
             <div className="nora-plan" data-testid="text-starting-plan">
