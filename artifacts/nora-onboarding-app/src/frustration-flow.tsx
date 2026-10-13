@@ -222,8 +222,9 @@ export function FrustrationScreen({
         <>
           {art(true)}
           {title('Big feelings over little things?')}
-          <div className="nora-insight-body">
-            <p className="nora-copy">When things don't go the way {childName} expects, even a small setback can turn into <strong className="nora-highlight">tears, anger, or giving up.</strong> It can be exhausting trying to figure out whether to comfort, encourage, step in, or give space.</p>
+          <div className="nora-insight-body nora-big-feelings-body">
+            <p className="nora-copy">When things don't go the way {childName} expects, even a small setback can turn into <strong className="nora-highlight">tears, anger, or giving up.</strong></p>
+            <p className="nora-copy">It can be exhausting trying to figure out whether to comfort, encourage, step in, or give space.</p>
             <div className="nora-insight-callout"><p className="nora-copy"><strong>Let's understand what happens for {childName} and discover what might help.</strong></p></div>
           </div>
         </>
@@ -289,14 +290,14 @@ export function FrustrationScreen({
       );
     case 'f-nora':
       return (
-        <>
-          {art(true)}
-          {title('How Nora helps:')}
-          <div className="nora-insight-body">
-            <p className="nora-copy">Nora listens to your real play sessions, helps you recognise what you're doing well, and coaches you on <strong className="nora-highlight">one small skill to practise next.</strong></p>
-            <div className="nora-insight-callout"><p className="nora-copy">As you grow more confident, we'll help you apply these skills to everyday challenges.</p></div>
-          </div>
-        </>
+        <img
+          className="nora-advisor-graphic"
+          src={`${import.meta.env.BASE_URL}nora-clinical-advisor.png`}
+          width={853}
+          height={676}
+          alt="Prof. Yi-Chuen Chen, PhD. Clinical Child Psychologist. Clinical Advisor to Nora. Nora helps you build the skills for hard moments, together."
+          data-testid="img-nora-clinical-advisor"
+        />
       );
     case 'f-plan':
       return (

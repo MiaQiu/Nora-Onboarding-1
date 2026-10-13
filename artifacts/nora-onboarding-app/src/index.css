@@ -787,3 +787,5 @@
 .nora-temperament-body .nora-copy + .nora-copy { margin-top: 22px; }
 .nora-main.is-insight .nora-temperament-title { font-size: clamp(1.5rem, 6vw, 1.85rem); line-height: 1.45; }
 .nora-temperament-title span { display: block; margin-top: 18px; color: #624a96; }
+.nora-big-feelings-body .nora-copy { font-size: 1.15rem; line-height: 1.75; }
+.nora-big-feelings-body .nora-copy + .nora-copy { margin-top: 24px; }
