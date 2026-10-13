@@ -770,3 +770,4 @@
 .nora-plan-goal-title { margin: 0; color: #3c3051; font-size: 1.05rem; font-weight: 700; line-height: 1.5; }
 .nora-plan-goal-note { margin: 8px 0 0; color: #7a7482; font-size: .82rem; line-height: 1.55; }
 .nora-title { overflow-wrap: anywhere; }
+.nora-advisor-graphic { display: block; width: 100%; height: auto; }

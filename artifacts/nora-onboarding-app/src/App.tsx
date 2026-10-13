@@ -579,14 +579,14 @@ function App() {
         );
       case 'nora':
         return (
-          <>
-            <NoraArt small />
-            <h1 className="nora-title" data-testid="text-step-title">Nora makes the practice personal.</h1>
-            <div className="nora-insight-body">
-              <p className="nora-copy">Nora uses what happens in your real moments together to suggest <strong>one small thing to practise next.</strong></p>
-              <div className="nora-insight-callout"><p className="nora-copy">Then you can try that approach during play and at your next screen-time ending.</p></div>
-            </div>
-          </>
+          <img
+            className="nora-advisor-graphic"
+            src={`${import.meta.env.BASE_URL}nora-clinical-advisor.png`}
+            width={853}
+            height={676}
+            alt="Prof. Yi-Chuen Chen, PhD. Clinical Child Psychologist. Clinical Advisor to Nora. Nora helps you build the skills for hard moments, together."
+            data-testid="img-nora-clinical-advisor"
+          />
         );
       case 'plan': {
         const goal = goalChoices.find((choice) => choice.value === answers.goal)?.label ?? '';
