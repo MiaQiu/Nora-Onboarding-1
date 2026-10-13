@@ -8,3 +8,9 @@ For the Nora onboarding, use a light, narrow, focused flow with restrained purpl
 **Why:** The user explicitly disliked the prior saturated full-purple page and asked for a style closer to the reference while retaining Nora's purple identity. They also asked for insight screens to highlight key messages.
 
 **How to apply:** Keep future onboarding design changes consistent with this calmer visual direction unless the user asks for a new one. Preserve the supplied Nora copy when highlighting it.
+
+Do not represent “Doesn't listen” with a crossed-out ear or hearing-loss symbol.
+
+**Why:** The user rejected that icon because it looked like deafness rather than a parenting challenge.
+
+**How to apply:** Use a communication-related visual for this choice without implying hearing impairment.

@@ -499,7 +499,7 @@ function App() {
       case 'context':
         return (
           <>
-            <h1 className="nora-title nora-insight-long-title" data-testid="text-step-title">screens are incredibly stimulating—they deliver constant novelty and excitement in a way that few other activities can match.</h1>
+            <h1 className="nora-title nora-insight-long-title" data-testid="text-step-title">Screens are incredibly stimulating—they deliver constant novelty and excitement in a way that few other activities can match.</h1>
             <div className="nora-insight-body nora-insight-large">
               <p className="nora-copy"><strong>This makes stopping genuinely hard for many kids.</strong></p>
               <p className="nora-copy">When the stimulation suddenly stops, their nervous system has to shift gears quickly, and that shift can feel really uncomfortable.</p>

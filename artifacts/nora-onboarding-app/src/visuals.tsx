@@ -44,7 +44,7 @@ const icons: Record<string, ReactNode> = {
   'prefer-not': <Frame><circle cx="20" cy="20" r="9" {...S} fill="#fffefd" /><path d="M14 20 h12" {...S} /><circle cx="20" cy="15.5" r="1" fill="#5d438f" /><circle cx="20" cy="24.5" r="1" fill="#5d438f" /></Frame>,
   screen: <Frame tone="#e9e4f6"><rect x="11" y="9" width="18" height="22" rx="3" {...S} fill="#fffefd" /><path d="M18 17 l5 3 -5 3z" {...S} fill="#c9bbe6" /><path d="M8 10 l-2 -2 M32 10 l2 -2" {...S} /></Frame>,
   frustrated: <Frame tone="#f7efe0"><path d="M12 24 a5 5 0 0 1 2 -9 a7 7 0 0 1 13 1 a4 4 0 0 1 1 8z" {...S} fill="#fffefd" /><path d="M20 26 l-2 5 h4 l-2 4" {...S} stroke="#c58a3a" /></Frame>,
-  listen: <Frame tone="#e3f4ec"><path d="M15 16 a6 6 0 0 1 12 0 c0 5 -5 5 -5 10 a3 3 0 0 1 -6 0" {...S} fill="#fffefd" /><path d="M19 16 a2 2 0 0 1 4 0" {...S} /><path d="M10 30 L30 10" {...S} stroke="#b06475" /></Frame>,
+  listen: <Frame tone="#e3f4ec"><path d="M10 10 h16 a3 3 0 0 1 3 3 v8 a3 3 0 0 1 -3 3 h-8 l-5 4 v-4 h-3 a3 3 0 0 1 -3 -3 v-8 a3 3 0 0 1 3 -3z" {...S} fill="#fffefd" /><path d="M12 15 h12 M12 19 h8" {...S} /><path d="M26 28 q3 -2 6 0 M27 32 h5" {...S} stroke="#9d88c6" /></Frame>,
   focus: <Frame tone="#e5eff8"><circle cx="20" cy="20" r="9" {...S} fill="#fffefd" /><circle cx="20" cy="20" r="3.5" {...S} /><circle cx="9" cy="10" r="1.5" fill="#8fa9d8" /><circle cx="32" cy="12" r="1.5" fill="#8fa9d8" /><circle cx="31" cy="31" r="1.5" fill="#8fa9d8" /></Frame>,
 };
 
