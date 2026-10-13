@@ -15,8 +15,8 @@ Do not represent “Doesn't listen” with a crossed-out ear or hearing-loss sym
 
 **How to apply:** Use a communication-related visual for this choice without implying hearing impairment.
 
-Use warm parent-and-child illustrations for the parent-learning, play, and screen-time transition insight pages, rather than abstract figures or device-and-clock diagrams.
+Use warm parent-and-child illustrations for the parent-learning and play insight pages, rather than abstract figures.
 
-**Why:** The user disliked the original learning/play visuals and explicitly selected warm parent-and-child illustrations, then also rejected the abstract transition diagram.
+**Why:** The user disliked the original learning/play visuals and explicitly selected warm parent-and-child illustrations. They later requested no visual on the screen-time transition page.
 
-**How to apply:** Keep future replacements for these pages human and approachable while preserving the restrained purple branding.
+**How to apply:** Place learning/play illustrations below the body text. Keep the screen-time transition page text-only unless the user asks otherwise.

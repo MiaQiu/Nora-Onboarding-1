@@ -6,6 +6,7 @@ import { FrustrationScreen, emptyFrustrationAnswers, frustrationCtaLabels, frust
 import type { FrustrationAnswers, FrustrationStep } from './frustration-flow';
 import { AgreementPrompt, InsightIllustration, choiceVisual } from './visuals';
 import { frequencyChoices, signalQuestions, teenChoices } from './signal-content';
+import { CortexIllustration } from './cortex-illustration';
 
 type Choice = { value: string; label: string };
 type Step =
@@ -542,24 +543,24 @@ function App() {
               <p className="nora-copy">It helps children <strong className="nora-highlight">focus, pause, switch plans, and think about what to do next.</strong> These abilities develop over many years and grow with experience and practice. So when {childName} struggles to stop a screen, the question isn’t just “How do I get them to listen?”</p>
               <div className="nora-insight-callout"><p className="nora-copy">It’s also <strong>“How can I help them practise what this moment asks of them?”</strong></p></div>
             </div>
+            <CortexIllustration />
           </>
         );
       case 'practice':
         return (
           <>
             <h1 className="nora-title" data-testid="text-step-title">You’re part of how {childName} learns.</h1>
-            <InsightIllustration scene="practice" />
             <div className="nora-insight-body nora-insight-large">
               <p className="nora-copy">Small moments with you give {childName} chances to <strong className="nora-highlight">wait, handle “no,” try a different plan, and recover</strong> when something doesn’t work.</p>
               <div className="nora-insight-callout"><p className="nora-copy">Those are the same kinds of skills screen-time endings ask for.</p></div>
             </div>
+            <InsightIllustration scene="practice" />
           </>
         );
       case 'transition':
         return (
           <>
             <h1 className="nora-title nora-insight-long-title" data-testid="text-step-title">We will start with understanding what’s happening during the screen time transition first and coach you how to apply strategies to make screentime predictable from your child first.</h1>
-            <InsightIllustration scene="transition" />
             <div className="nora-insight-body">
               <div className="nora-insight-callout"><p className="nora-copy">Once the screentime becomes predictable. We will coach you techniques to practice with {childName} during your daily play time if {childName} still find it challenging.</p></div>
             </div>
@@ -569,12 +570,12 @@ function App() {
         return (
           <>
             <h1 className="nora-title" data-testid="text-step-title">Why start with play?</h1>
-            <InsightIllustration scene="play" />
             <div className="nora-insight-body">
               <p className="nora-copy">Imagine {childName} builds a tower and it falls. They feel disappointed—but <strong className="nora-highlight">the stakes are low, and you’re right there.</strong></p>
               <div className="nora-insight-callout"><p className="nora-copy">Play gives {childName} room to practise trying again or changing plans.</p></div>
               <p className="nora-copy">It also gives you a calmer moment to practise how you respond, so you have something familiar to draw on when emotions run high.</p>
             </div>
+            <InsightIllustration scene="play" />
           </>
         );
       case 'nora':
@@ -596,17 +597,28 @@ function App() {
         ].filter(Boolean).join(', ');
         const tried = answers.strategies.map((value) => strategyChoices.find((choice) => choice.value === value)?.label ?? '').join(', ');
         return (
-          <div className="nora-complete">
+          <div className="nora-complete nora-screen-plan">
             <NoraArt />
             <h1 className="nora-title" data-testid="text-step-title">{childName}’s starting plan.</h1>
             <div className="nora-plan-goal" data-testid="text-two-month-goal">
               <p className="nora-plan-goal-title">Our two-month goal: Help {childName} manage screen time without tantrums.</p>
+              <figure className="nora-goal-comparison">
+                <div className="nora-goal-labels"><span>Before</span><span>After — our goal</span></div>
+                <img
+                  src={`${import.meta.env.BASE_URL}nora-two-month-before-after.jpg`}
+                  alt="Illustrated goal: a child upset at the end of screen time, followed by the same child calmly putting the tablet away and playing with a supportive parent."
+                  className="nora-goal-image"
+                  data-testid="img-two-month-before-after"
+                />
+              </figure>
               <p className="nora-plan-goal-note" data-testid="text-goal-disclaimer">Progress varies from child to child; this is a goal, not a guaranteed outcome.</p>
             </div>
             <div className="nora-plan" data-testid="text-starting-plan">
-              <p><span className="nora-plan-line">Your goal: <strong>{goal}</strong>.</span>{' '}<span className="nora-plan-line">The hard moment: <strong>{replaceEthan(pattern)}</strong>.</span>{' '}<span className="nora-plan-line">What you’ve tried: <strong>{replaceEthan(tried)}</strong></span></p>
-              <p>Start with: Helping {childName} practise switching, coping, and moving on in small moments together.</p>
-              <p data-testid="text-plan-closing">You’re not just making screen-time endings easier. You’re building essential life skills and a stronger parent-child bond that will last for years.</p>
+              <p><span className="nora-plan-label">Your goal</span><strong>{goal}</strong>.</p>
+              <p><span className="nora-plan-label">The hard moment</span><strong>{replaceEthan(pattern)}</strong>.</p>
+              <p><span className="nora-plan-label">What you’ve tried</span><strong>{replaceEthan(tried)}</strong></p>
+              <p><span className="nora-plan-label">Start with</span>Helping {childName} practise <strong>switching, coping, and moving on</strong> in small moments together.</p>
+              <p data-testid="text-plan-closing">You’re not just making screen-time endings easier. You’re building <strong>essential life skills</strong> and a <strong>stronger parent-child bond</strong> that will last for years.</p>
               <p>No payment required to start. First three times is free!</p>
             </div>
           </div>

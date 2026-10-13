@@ -1,0 +1,16 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "A9pN16S7suQ3py_Lomh8c"
+uri = "file://artifacts/nora-onboarding-app/public/nora-two-month-before-after.jpg"
+type = "image"
+title = "Screen-time before and after"
+description = "Warm illustration of a difficult screen-time ending and the calmer transition the family is working toward."
+logical_id = "c7923da1-e914-454a-993c-ef40a5ca0977"
+content_hash = "sha256:0cd8738068cfcdb82562f79a9f8fe57228d22b2608b701770b8266222474af59"
+size = 68052
+mtime_ms = 1791855320000
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:61ba5b28-f595-46ca-9df6-13f0d656f6c8/c7923da1-e914-454a-993c-ef40a5ca0977/b69f1012-43c1-4dbf-9deb-ca175a05764a"
+storage_version_token = "1791855362999368"
+content_type = "image/jpeg"
