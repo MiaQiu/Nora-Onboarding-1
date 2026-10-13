@@ -8,6 +8,7 @@ import { AgreementPrompt, InsightIllustration, choiceVisual } from './visuals';
 import { frequencyChoices, signalQuestions, teenChoices } from './signal-content';
 import { CortexIllustration } from './cortex-illustration';
 import { getPlanVisual } from './plan-visual';
+import { PlayAwarenessQuestion } from './play-awareness-question';
 
 type Choice = { value: string; label: string };
 type Step =
@@ -38,6 +39,7 @@ type Step =
   | 'cortex-help'
   | 'practice'
   | 'transition'
+  | 'play-awareness'
   | 'play'
   | 'nora'
   | 'plan'
@@ -66,6 +68,7 @@ type Answers = {
   goal: string;
   barriers: string;
   cortex: string;
+  playAwareness: string;
 };
 
 const genderChoices: Choice[] = [
@@ -215,6 +218,7 @@ function App() {
     goal: '',
     barriers: '',
     cortex: '',
+    playAwareness: '',
   });
 
   const [frustration, setFrustration] = useState<FrustrationAnswers>(emptyFrustrationAnswers);
@@ -257,6 +261,7 @@ function App() {
             'windows',
             'practice',
             'transition',
+            'play-awareness',
             'play',
             'nora',
             'plan',
@@ -313,6 +318,7 @@ function App() {
     if (current.startsWith('assessment-')) return Boolean(answers.ratings[current]);
     if (current.startsWith('signal-')) return Boolean(answers.signals[current]);
     if (current === 'teen') return Boolean(answers.teen);
+    if (current === 'play-awareness') return Boolean(answers.playAwareness);
     if (current === 'hardest' || current === 'dopamine' || current === 'worked' || current === 'stress' || current === 'barriers' || current === 'goal' || current === 'cortex') {
       return Boolean(answers[current]);
     }
@@ -364,6 +370,7 @@ function App() {
           answers={frustration}
           setAnswers={setFrustration}
           clearInvalid={() => setInvalid(false)}
+          onAdvance={() => setStepIndex((index) => Math.min(flow.length - 1, index + 1))}
           art={(small) => <NoraArt small={small} />}
         />
       );
@@ -579,6 +586,12 @@ function App() {
             <InsightIllustration scene="play" />
           </>
         );
+      case 'play-awareness':
+        return <PlayAwarenessQuestion answer={answers.playAwareness} onAnswer={(value) => {
+          setAnswers((previous) => ({ ...previous, playAwareness: value }));
+          setInvalid(false);
+          setStepIndex((index) => Math.min(flow.length - 1, index + 1));
+        }} />;
       case 'nora':
         return (
           <img

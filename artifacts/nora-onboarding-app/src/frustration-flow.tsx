@@ -2,7 +2,8 @@ import { useState } from 'react';
 import type { ReactNode } from 'react';
 import { Check, ChevronRight } from 'lucide-react';
 import { agreementChoices } from './flow-content';
-import { AgreementPrompt, choiceVisual } from './visuals';
+import { AgreementPrompt, InsightIllustration, choiceVisual } from './visuals';
+import { PlayAwarenessQuestion } from './play-awareness-question';
 
 type Choice = { value: string; label: string };
 
@@ -60,6 +61,7 @@ export type FrustrationStep =
   | 'f-growth'
   | 'f-support'
   | 'f-differences'
+  | 'f-play-awareness'
   | 'f-play'
   | 'f-nora'
   | 'f-plan';
@@ -74,6 +76,7 @@ export const frustrationSteps: FrustrationStep[] = [
   'f-growth',
   'f-support',
   'f-differences',
+  'f-play-awareness',
   'f-play',
   'f-nora',
   'f-plan',
@@ -96,6 +99,7 @@ export type FrustrationAnswers = {
   strategies: string[];
   worked: string;
   differences: string[];
+  playAwareness: string;
 };
 
 export const emptyFrustrationAnswers: FrustrationAnswers = {
@@ -104,6 +108,7 @@ export const emptyFrustrationAnswers: FrustrationAnswers = {
   strategies: [],
   worked: '',
   differences: [],
+  playAwareness: '',
 };
 
 export function isFrustrationStep(step: string): step is FrustrationStep {
@@ -111,6 +116,7 @@ export function isFrustrationStep(step: string): step is FrustrationStep {
 }
 
 export function frustrationHasAnswer(step: string, a: FrustrationAnswers) {
+  if (step === 'f-play-awareness') return Boolean(a.playAwareness);
   if (step.startsWith('f-assessment-')) return Boolean(a.ratings[step]);
   if (step === 'f-behavior') return a.behavior.length > 0;
   if (step === 'f-strategies') return a.strategies.length > 0;
@@ -152,6 +158,7 @@ export function FrustrationScreen({
   answers,
   setAnswers,
   clearInvalid,
+  onAdvance,
   art,
 }: {
   step: FrustrationStep;
@@ -159,6 +166,7 @@ export function FrustrationScreen({
   answers: FrustrationAnswers;
   setAnswers: (updater: (prev: FrustrationAnswers) => FrustrationAnswers) => void;
   clearInvalid: () => void;
+  onAdvance: () => void;
   art: (small?: boolean) => ReactNode;
 }) {
   const n = (text: string) => text.replaceAll('[Name]', childName);
@@ -230,8 +238,11 @@ export function FrustrationScreen({
       return (
         <>
           {title('Have you heard of temperament?')}
-          <div className="nora-insight-body">
-            <p className="nora-copy">Every child has a natural way of responding to the world. <strong className="nora-highlight">These differences are part of temperament.</strong> Some children feel emotions more intensely. Others find it harder to adapt when things don't go as expected or take longer to settle after becoming upset. These differences can influence how children respond to frustration.</p>
+          <div className="nora-insight-body nora-temperament-body">
+            <p className="nora-copy">Every child has a natural way of responding to the world.</p>
+            <p className="nora-copy"><strong className="nora-highlight">These differences are part of temperament.</strong></p>
+            <p className="nora-copy">Some children feel emotions more intensely. Others find it harder to adapt when things don't go as expected or take longer to settle after becoming upset.</p>
+            <p className="nora-copy">These differences can influence how children respond to frustration.</p>
             <div className="nora-insight-callout"><p className="nora-copy"><strong>It's not your child's fault, and it's not your fault either.</strong></p></div>
           </div>
         </>
@@ -239,9 +250,12 @@ export function FrustrationScreen({
     case 'f-growth':
       return (
         <>
-          {title("Your child's temperament may make frustration harder to handle, but it doesn't determine how they'll respond forever.")}
-          <div className="nora-insight-body">
-            <div className="nora-insight-callout"><p className="nora-copy"><strong>Frustration tolerance is a skill that can grow with practice.</strong> With your support, {childName} can learn to handle disappointment, work through challenges, and recover when things go wrong.</p></div>
+          <h1 className="nora-title nora-temperament-title" data-testid="text-step-title">Your child's temperament may make frustration harder to handle, <span>but it doesn't determine how they'll respond forever.</span></h1>
+          <div className="nora-insight-body nora-temperament-body">
+            <div className="nora-insight-callout">
+              <p className="nora-copy"><strong className="nora-highlight">Frustration tolerance is a skill that can grow with practice.</strong></p>
+              <p className="nora-copy">With your support, {childName} can learn to handle disappointment, work through challenges, and recover when things go wrong.</p>
+            </div>
           </div>
         </>
       );
@@ -252,10 +266,17 @@ export function FrustrationScreen({
           <div className="nora-insight-body">
             <div className="nora-insight-callout"><p className="nora-copy">Small challenges, with your support, help {childName} practise <strong>handling disappointment, trying again, and working through frustration.</strong></p></div>
           </div>
+          <InsightIllustration scene="practice" />
         </>
       );
     case 'f-differences':
       return <>{title(`Does ${childName} have any learning or thinking differences?`)}<p className="nora-copy">Select all that apply.</p>{multi('differences', differenceChoices)}</>;
+    case 'f-play-awareness':
+      return <PlayAwarenessQuestion answer={answers.playAwareness} onAnswer={(value) => {
+        setAnswers((previous) => ({ ...previous, playAwareness: value }));
+        clearInvalid();
+        onAdvance();
+      }} />;
     case 'f-play':
       return (
         <>
