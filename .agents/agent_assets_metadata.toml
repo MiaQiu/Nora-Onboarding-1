@@ -42,3 +42,31 @@ mtime_ms = 1791855735439
 storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:61ba5b28-f595-46ca-9df6-13f0d656f6c8/a43c06c6-318d-4aab-bb35-4741ed68f0c6/cf60ee61-bb16-416e-abef-6d12170022ed"
 storage_version_token = "1791855793649677"
 content_type = "image/jpeg"
+
+[[outputs]]
+id = "NIFuL36frYMWMjRmfksas"
+uri = "file://artifacts/nora-onboarding-app/public/nora-frustration-boy-before-after.jpg"
+type = "image"
+title = "Frustration practice — boy"
+description = "Before-and-after goal illustration showing a child recovering from a setback and trying again with parent support."
+logical_id = "d84e013c-a2a9-4055-8f36-f88ef2623ec3"
+content_hash = "sha256:cc498e0b3a36455b8c14cce094c0c6d4f6aa65b8ac66d0c6a09d961ed20c10bc"
+size = 101696
+mtime_ms = 1791872725328
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:61ba5b28-f595-46ca-9df6-13f0d656f6c8/d84e013c-a2a9-4055-8f36-f88ef2623ec3/bc42d68a-f003-4d1c-813a-2709e04075eb"
+storage_version_token = "1791872769121635"
+content_type = "image/jpeg"
+
+[[outputs]]
+id = "-NK1KexWefYoTmR-HEyXB"
+uri = "file://artifacts/nora-onboarding-app/public/nora-frustration-girl-before-after.jpg"
+type = "image"
+title = "Frustration practice — girl"
+description = "Matching girl illustration for the personalized frustration plan."
+logical_id = "27aeb40a-2082-4fd5-8ecf-985c2664c8b1"
+content_hash = "sha256:a1fb83a36cd61973b81f8af5dab3ff12b67d020f692bdde9c5de94e4e9def4da"
+size = 110146
+mtime_ms = 1791872725438
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:61ba5b28-f595-46ca-9df6-13f0d656f6c8/27aeb40a-2082-4fd5-8ecf-985c2664c8b1/5549ea71-102e-4fa0-b275-03a0050ca022"
+storage_version_token = "1791872770377281"
+content_type = "image/jpeg"

@@ -4,6 +4,7 @@ import { Check, ChevronRight } from 'lucide-react';
 import { agreementChoices } from './flow-content';
 import { AgreementPrompt, InsightIllustration, choiceVisual } from './visuals';
 import { PlayAwarenessQuestion } from './play-awareness-question';
+import { getPlanVisual } from './plan-visual';
 
 type Choice = { value: string; label: string };
 
@@ -155,6 +156,7 @@ function PlanCta() {
 export function FrustrationScreen({
   step,
   childName,
+  gender,
   answers,
   setAnswers,
   clearInvalid,
@@ -163,6 +165,7 @@ export function FrustrationScreen({
 }: {
   step: FrustrationStep;
   childName: string;
+  gender: string;
   answers: FrustrationAnswers;
   setAnswers: (updater: (prev: FrustrationAnswers) => FrustrationAnswers) => void;
   clearInvalid: () => void;
@@ -299,25 +302,47 @@ export function FrustrationScreen({
           data-testid="img-nora-clinical-advisor"
         />
       );
-    case 'f-plan':
+    case 'f-plan': {
+      const planVisual = getPlanVisual(gender, 'frustration');
+      const hardMoment = answers.behavior
+        .map((value) => behaviorChoices.find((choice) => choice.value === value)?.label)
+        .filter(Boolean).join(', ');
+      const tried = answers.strategies
+        .map((value) => strategyChoices.find((choice) => choice.value === value)?.label)
+        .filter(Boolean).join(', ');
       return (
-        <div className="nora-complete">
+        <div className="nora-complete nora-screen-plan">
           {art()}
           {title(`${childName}'s Nora Plan`)}
+          <div className="nora-plan-goal" data-testid="text-frustration-goal">
+            <p className="nora-plan-goal-title"><span className="nora-plan-label">Our goal</span>Help {childName} handle frustration, recover from setbacks, and keep trying when things get hard.</p>
+            {planVisual && <figure className="nora-goal-comparison">
+              <div className="nora-goal-labels"><span>Before</span><span>After — our goal</span></div>
+              <img
+                src={`${import.meta.env.BASE_URL}${planVisual.file}`}
+                alt={planVisual.alt}
+                className="nora-goal-image"
+                data-testid="img-frustration-before-after"
+              />
+            </figure>}
+            <p className="nora-plan-goal-note" data-testid="text-frustration-goal-disclaimer">Progress varies from child to child; this is a goal, not a guaranteed outcome.</p>
+          </div>
           <div className="nora-plan" data-testid="text-frustration-plan">
-            <p><span className="nora-kicker" style={{ display: 'block', marginBottom: 6 }}>YOUR GOAL</span>Help {childName} handle frustration, recover from setbacks, and keep trying when things get hard.</p>
+            {hardMoment && <p><span className="nora-plan-label">The hard moment</span><strong>{hardMoment}</strong></p>}
+            {tried && <p><span className="nora-plan-label">What you’ve tried</span><strong>{tried}</strong></p>}
             <p>
-              <span className="nora-kicker" style={{ display: 'block', marginBottom: 6 }}>WHAT WE'LL FOCUS ON</span>
-              <span className="nora-plan-line">- Understanding and handling big feelings</span>
-              <span className="nora-plan-line">- Coping with disappointment and mistakes</span>
-              <span className="nora-plan-line">- Practising how to recover when things go wrong</span>
+              <span className="nora-plan-label">WHAT WE'LL FOCUS ON</span>
+              <span className="nora-plan-line">- Understanding and handling <strong>big feelings</strong></span>
+              <span className="nora-plan-line">- Coping with <strong>disappointment and mistakes</strong></span>
+              <span className="nora-plan-line">- Practising how to <strong>recover when things go wrong</strong></span>
             </p>
-            <p><span className="nora-kicker" style={{ display: 'block', marginBottom: 6 }}>YOUR FIRST STEP</span>Start with five minutes of guided play. Nora will help you practise one skill at a time.</p>
+            <p><span className="nora-plan-label">YOUR FIRST STEP</span>Start with <strong>five minutes of guided play.</strong> Nora will help you practise <strong>one skill at a time.</strong></p>
             <p>Your first three recordings are free. No payment required to start.</p>
           </div>
           <PlanCta />
         </div>
       );
+    }
     default:
       return null;
   }

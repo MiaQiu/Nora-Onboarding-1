@@ -367,6 +367,7 @@ function App() {
         <FrustrationScreen
           step={current}
           childName={childName}
+          gender={profile.gender}
           answers={frustration}
           setAnswers={setFrustration}
           clearInvalid={() => setInvalid(false)}
