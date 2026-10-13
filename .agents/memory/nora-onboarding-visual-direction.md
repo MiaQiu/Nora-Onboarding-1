@@ -14,3 +14,9 @@ Do not represent “Doesn't listen” with a crossed-out ear or hearing-loss sym
 **Why:** The user rejected that icon because it looked like deafness rather than a parenting challenge.
 
 **How to apply:** Use a communication-related visual for this choice without implying hearing impairment.
+
+Use warm parent-and-child illustrations for the parent-learning and play insight pages, rather than abstract geometric figures.
+
+**Why:** The user disliked the original visuals and explicitly selected warm parent-and-child illustrations over photos or text-only pages.
+
+**How to apply:** Keep future replacements for these pages human and approachable while preserving the restrained purple branding.

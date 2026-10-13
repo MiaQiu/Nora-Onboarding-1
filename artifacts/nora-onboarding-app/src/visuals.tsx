@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { PlayScene, PracticeScene } from './family-scenes';
 
 const S = { fill: 'none', stroke: '#5d438f', strokeWidth: 2, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
 
@@ -73,14 +74,7 @@ export function InsightIllustration({ scene }: { scene: Scene }) {
   return (
     <svg viewBox="0 0 320 120" className="nora-illustration" aria-hidden="true" focusable="false" data-testid={`img-illustration-${scene}`}>
       <rect width="320" height="120" rx="16" fill="#f4f0f8" />
-      {scene === 'practice' && (
-        <g {...S}>
-          <circle cx="110" cy="44" r="14" fill="#fffefd" /><path d="M88 104 q22 -44 44 0" fill="#d8cdea" />
-          <circle cx="196" cy="62" r="10" fill="#fffefd" /><path d="M180 104 q16 -32 32 0" fill="#c4e8d8" />
-          <path d="M134 74 q24 -14 46 -2" strokeDasharray="4 5" />
-          <path d="M150 28 l4 -8 4 8 M246 40 h22 M246 52 h14" stroke="#9d88c6" />
-        </g>
-      )}
+      {scene === 'practice' && <PracticeScene />}
       {scene === 'transition' && (
         <g {...S}>
           <rect x="42" y="34" width="44" height="58" rx="7" fill="#fffefd" /><path d="M58 56 l12 7 -12 7z" fill="#d8cdea" />
@@ -88,14 +82,7 @@ export function InsightIllustration({ scene }: { scene: Scene }) {
           <path d="M184 63 h40" strokeDasharray="4 5" /><path d="M244 88 h40 l-6 -30 h-28z" fill="#c4e8d8" /><path d="M256 58 v-12 h16 v12" />
         </g>
       )}
-      {scene === 'play' && (
-        <g {...S}>
-          <rect x="70" y="80" width="28" height="18" rx="3" fill="#d8cdea" /><rect x="74" y="62" width="22" height="18" rx="3" fill="#c4e8d8" /><rect x="78" y="44" width="16" height="18" rx="3" fill="#f7efe0" />
-          <rect x="128" y="86" width="20" height="12" rx="3" fill="#f7efe0" transform="rotate(14 138 92)" />
-          <circle cx="210" cy="50" r="13" fill="#fffefd" /><path d="M190 100 q20 -40 40 0" fill="#d8cdea" />
-          <path d="M184 66 q-30 -6 -64 6" strokeDasharray="4 5" /><path d="M250 34 q8 6 0 12" stroke="#9d88c6" />
-        </g>
-      )}
+      {scene === 'play' && <PlayScene />}
     </svg>
   );
 }
