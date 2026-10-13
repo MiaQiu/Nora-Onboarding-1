@@ -126,3 +126,64 @@ export function PlayScene() {
     </g>
   );
 }
+
+export function TransitionScene() {
+  return (
+    <g>
+      <rect width="320" height="120" rx="16" fill="#f5effa" />
+      <circle cx="270" cy="34" r="38" fill="#fbf1dc" />
+      <path d="M0 100 H320 V104 a16 16 0 0 1 -16 16 H16 a16 16 0 0 1 -16 -16z" fill="#e6dcf3" />
+      {/* lamp glow + window */}
+      <rect x="22" y="16" width="40" height="34" rx="6" fill="#fbf7f2" {...line} />
+      <path d="M42 16 v34 M22 33 h40" {...line} fill="none" />
+      {/* basket with tablet going in */}
+      <path d="M38 82 h40 l-4 18 h-32z" fill="#cdb6e6" {...line} />
+      <path d="M44 88 h28 M46 94 h24" stroke="#a48cc9" strokeWidth={1.2} strokeLinecap="round" />
+      <rect x="52" y="64" width="18" height="24" rx="3" fill="#6b5a8e" {...line} transform="rotate(-12 61 76)" />
+      <rect x="55" y="67" width="12" height="16" rx="1.5" fill="#9e8fc0" transform="rotate(-12 61 76)" />
+      <path d="M84 70 q4 -4 2 -9" fill="none" stroke="#a48cc9" strokeWidth={1.4} strokeLinecap="round" />
+
+      {/* parent, kneeling behind, hand on child's shoulder */}
+      <path d="M100 104 q-6 -40 18 -50 q22 -6 30 14 l2 36z" fill="#7b5bb3" {...line} />
+      <path d="M140 72 q12 0 22 8" fill="none" stroke={INK} strokeWidth={6} strokeLinecap="round" />
+      <path d="M140 72 q12 0 22 8" fill="none" stroke="#7b5bb3" strokeWidth={3.4} strokeLinecap="round" />
+      <circle cx="163" cy="80" r="3.4" fill={SKIN_A} {...line} />
+      <rect x="120" y="44" width="8" height="10" rx="3" fill={SKIN_A} />
+      <circle cx="124" cy="32" r="14" fill={SKIN_A} {...line} />
+      <path d="M109 34 q-4 -20 14 -18 q16 -2 16 14 q-6 -8 -16 -8 q-8 2 -10 12 q-2 10 -4 14 q-4 -6 0 -14z" fill={HAIR_A} {...line} />
+      <circle cx="108" cy="20" r="6" fill={HAIR_A} {...line} />
+      <Eyes x={126} y={33} gap={7} />
+      <path d="M127 40 q3 2.4 6 0" fill="none" {...line} />
+      <circle cx="136" cy="37" r="2.2" fill="#f0a3a0" opacity={0.55} />
+      {/* heart of reassurance */}
+      <path d="M150 26 q-4 -5 -7 -1 q-2 3 7 9 q9 -6 7 -9 q-3 -4 -7 1z" fill="#f2a99e" {...line} strokeWidth={1.2} />
+
+      {/* child, letting go toward basket, turning to craft table */}
+      <path d="M160 106 q-2 -30 14 -36 q16 -4 22 10 l2 26z" fill="#f2b45c" {...line} />
+      <path d="M168 84 q-20 0 -32 -6" fill="none" stroke={INK} strokeWidth={5.4} strokeLinecap="round" />
+      <path d="M168 84 q-20 0 -32 -6" fill="none" stroke="#f2b45c" strokeWidth={2.8} strokeLinecap="round" />
+      <path d="M136 78 q-30 -6 -58 -4" fill="none" stroke="#a48cc9" strokeWidth={1.3} strokeDasharray="2 4" strokeLinecap="round" />
+      <circle cx="134.5" cy="77.5" r="3" fill={SKIN_B} {...line} />
+      <path d="M194 84 q12 -4 22 -14" fill="none" stroke={INK} strokeWidth={5.4} strokeLinecap="round" />
+      <path d="M194 84 q12 -4 22 -14" fill="none" stroke="#f2b45c" strokeWidth={2.8} strokeLinecap="round" />
+      <circle cx="217" cy="69" r="3" fill={SKIN_B} {...line} />
+      <rect x="176" y="60" width="7" height="8" rx="3" fill={SKIN_B} />
+      <circle cx="181" cy="50" r="12" fill={SKIN_B} {...line} />
+      <path d="M169 48 q0 -14 13 -13 q12 0 11 12 q-4 -5 -9 -6 l-3 4 l-2 -4 q-6 1 -10 7z" fill={HAIR_B} {...line} />
+      <Eyes x={180} y={51} gap={7} happy={false} />
+      <path d="M181 56 q3.4 3.4 7 0" fill="#fffaf3" {...line} />
+      <circle cx="191" cy="55" r="2" fill="#e88a80" opacity={0.5} />
+
+      {/* inviting craft table */}
+      <rect x="226" y="80" width="78" height="7" rx="3" fill="#cdb6e6" {...line} />
+      <path d="M234 87 v13 M296 87 v13" {...line} />
+      <path d="M240 80 l4 -14 h34 l4 14z" fill="#fffaf3" {...line} />
+      <path d="M252 72 q6 -6 12 0 q4 4 8 -2" fill="none" stroke="#7fb79c" strokeWidth={1.8} strokeLinecap="round" />
+      <circle cx="258" cy="70" r="2.4" fill="#f6d27a" />
+      <path d="M284 78 l14 -6" stroke="#f2a99e" strokeWidth={3} strokeLinecap="round" />
+      <path d="M286 74 l10 -8" stroke="#8b6bc4" strokeWidth={3} strokeLinecap="round" />
+      <path d="M262 48 l2 -6 2 6 6 2 -6 2 -2 6 -2 -6 -6 -2z" fill="#f6d27a" {...line} strokeWidth={1.2} />
+      <path d="M232 58 l4 -3 M240 50 l1 -5" stroke="#a48cc9" strokeWidth={1.6} strokeLinecap="round" />
+    </g>
+  );
+}

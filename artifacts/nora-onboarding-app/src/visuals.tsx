@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { PlayScene, PracticeScene } from './family-scenes';
+import { PlayScene, PracticeScene, TransitionScene } from './family-scenes';
 
 const S = { fill: 'none', stroke: '#5d438f', strokeWidth: 2, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
 
@@ -75,13 +75,7 @@ export function InsightIllustration({ scene }: { scene: Scene }) {
     <svg viewBox="0 0 320 120" className="nora-illustration" aria-hidden="true" focusable="false" data-testid={`img-illustration-${scene}`}>
       <rect width="320" height="120" rx="16" fill="#f4f0f8" />
       {scene === 'practice' && <PracticeScene />}
-      {scene === 'transition' && (
-        <g {...S}>
-          <rect x="42" y="34" width="44" height="58" rx="7" fill="#fffefd" /><path d="M58 56 l12 7 -12 7z" fill="#d8cdea" />
-          <path d="M100 63 h40" strokeDasharray="4 5" /><circle cx="160" cy="63" r="18" fill="#fffefd" /><path d="M160 52 v11 l7 5" />
-          <path d="M184 63 h40" strokeDasharray="4 5" /><path d="M244 88 h40 l-6 -30 h-28z" fill="#c4e8d8" /><path d="M256 58 v-12 h16 v12" />
-        </g>
-      )}
+      {scene === 'transition' && <TransitionScene />}
       {scene === 'play' && <PlayScene />}
     </svg>
   );
